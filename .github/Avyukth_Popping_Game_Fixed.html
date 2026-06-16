@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pop Game</title>
+<style>
+body{font-family:Arial;text-align:center;background:#eef7ff;}
+#game{width:700px;max-width:95vw;height:450px;border:3px solid #4aa3df;
+margin:20px auto;position:relative;background:white;overflow:hidden;border-radius:16px;}
+.balloon{
+position:absolute;width:60px;height:60px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:34px;cursor:pointer;
+}
+</style>
+</head>
+<body>
+<h1>🎈 Avyukth's Popping Game</h1>
+<h2 id="score">Score: 0</h2>
+<div id="game"></div>
+
+<script>
+const game = document.getElementById('game');
+const scoreEl = document.getElementById('score');
+let score = 0;
+
+function addBalloon(){
+  const b = document.createElement('div');
+  b.className = 'balloon';
+  b.textContent = '🎈';
+  b.style.background = ['#ffd1dc','#d1ffd8','#fff2b3','#d7d1ff'][Math.floor(Math.random()*4)];
+  b.style.left = Math.floor(Math.random()*(game.clientWidth-60)) + 'px';
+  b.style.top = Math.floor(Math.random()*(game.clientHeight-60)) + 'px';
+
+  b.addEventListener('click', function(){
+    score++;
+    scoreEl.textContent = 'Score: ' + score;
+    b.remove();
+    addBalloon();
+  });
+
+  game.appendChild(b);
+
+  setTimeout(() => {
+    if (b.parentNode){
+      b.remove();
+      addBalloon();
+    }
+  }, 3000);
+}
+
+for(let i=0;i<6;i++) addBalloon();
+</script>
+</body>
+</html>
